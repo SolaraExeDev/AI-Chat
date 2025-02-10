@@ -6,3 +6,11 @@
     color: white;
     background-color: rgb(119, 119, 119);
 }
+@keyframes shine {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
