@@ -3,6 +3,8 @@ import { UserButton, SignedIn } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 const Chatroom = () => {
     const [personaldata, setpersonaldata] = useState("")
     const [responses, setresponses] = useState({
@@ -29,142 +31,6 @@ const Chatroom = () => {
     });
 
 
-
-
-    function convertToJSX(text) {
-        const elements = [];
-        let lastIndex = 0;
-
-        // Handle code blocks (```language\ncode```)
-        text.replace(/```(\w+)?\n([\s\S]+?)```/g, (match, lang, code, offset) => {
-            elements.push(text.slice(lastIndex, offset)); // Push previous text
-            elements.push(
-                <pre key={uuidv4()} className="bg-gray-800 text-white p-4 rounded-md overflow-x-auto">
-                    <code className={`language-${lang || "plaintext"}`}>
-                        {code}
-                    </code>
-                </pre>
-            );
-            lastIndex = offset + match.length;
-            return match;
-        });
-
-        let remainingText = text.slice(lastIndex);
-
-        // Convert inline Markdown (bold, italic, inline code, and bullet points)
-        remainingText = remainingText.split("\n").map((line, index) => {
-            const parts = [];
-            let lastBoldIndex = 0;
-            let lastItalicIndex = 0;
-            let lastCodeIndex = 0;
-
-            // Handle **bold text**
-            line.replace(/\*\*(.*?)\*\*/g, (match, boldText, offset) => {
-                parts.push(line.slice(lastBoldIndex, offset)); // Push previous text
-                parts.push(<b key={uuidv4()} className="font-bold">{boldText}</b>);
-                lastBoldIndex = offset + match.length;
-                return match;
-            });
-
-            if (lastBoldIndex < line.length) {
-                parts.push(line.slice(lastBoldIndex));
-            }
-
-            // Handle *italic text*
-            const italicProcessed = parts.map((part) => {
-                if (typeof part === "string") {
-                    const italicParts = [];
-                    let lastItalic = 0;
-                    part.replace(/\*(?!\s)(.*?)(?<!\s)\*/g, (match, italicText, offset) => {
-                        italicParts.push(part.slice(lastItalic, offset)); // Push previous text
-                        italicParts.push(<i key={uuidv4()} className="italic">{italicText}</i>);
-                        lastItalic = offset + match.length;
-                        return match;
-                    });
-
-                    if (lastItalic < part.length) {
-                        italicParts.push(part.slice(lastItalic));
-                    }
-
-                    return italicParts.length > 0 ? italicParts : part;
-                }
-                return part;
-            });
-
-            // Handle `inline code`
-            const codeProcessed = italicProcessed.flat().map((part) => {
-                if (typeof part === "string") {
-                    const codeParts = [];
-                    let lastCode = 0;
-                    part.replace(/`([^`\n]+)`/g, (match, codeText, offset) => {
-                        codeParts.push(part.slice(lastCode, offset)); // Push previous text
-                        codeParts.push(
-                            <code key={uuidv4()} className="bg-gray-200 px-1 py-0.5 rounded text-red-600">
-                                {codeText}
-                            </code>
-                        );
-                        lastCode = offset + match.length;
-                        return match;
-                    });
-
-                    if (lastCode < part.length) {
-                        codeParts.push(part.slice(lastCode));
-                    }
-
-                    return codeParts.length > 0 ? codeParts : part;
-                }
-                return part;
-            });
-
-            // Handle tables in markdown format: parse the table syntax
-            const tableProcessed = codeProcessed.flat().map((part) => {
-                if (typeof part === "string") {
-                    const tableParts = [];
-                    const tableRegex = /\|(.+?)\|/g;
-
-                    // Check if the string has table syntax
-                    if (/\|.*\|/.test(part)) {
-                        const rows = part.split("\n");
-
-                        // Skip the second row which contains the dashes for table headers
-                        const filteredRows = rows.filter(row => !/^[-| ]+$/.test(row.trim()));
-
-                        tableParts.push(
-                            <table key={uuidv4()} className="min-w-full table-auto border-collapse">
-                                <tbody>
-                                    {filteredRows.map((row, rowIndex) => (
-                                        <tr key={rowIndex}>
-                                            {row.split("|").map((cell, cellIndex) => (
-                                                <td key={cellIndex} className="border px-4 py-2">{cell.trim()}</td>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        );
-                    } else {
-                        // If no table is found, just return the part as regular text
-                        tableParts.push(part);
-                    }
-
-                    return tableParts;
-                }
-                return part;
-            });
-
-            return (
-                <React.Fragment key={uuidv4()}>
-                    {tableProcessed.flat()}
-                    <br />
-                </React.Fragment>
-            );
-        });
-
-        elements.push(...remainingText);
-
-        return elements;
-    }
-
     const generationConfig = {
         temperature: 0,
         topP: 0.95,
@@ -172,7 +38,17 @@ const Chatroom = () => {
         maxOutputTokens: 8192,
         responseMimeType: "text/plain",
     };
+    useEffect(() => {
 
+
+        let a = JSON.parse(localStorage.getItem("TalkX"))
+        if (a) {
+            setresponses(a)
+        }
+        return () => {
+
+        }
+    }, [])
 
     const handleinputchange = (e) => {
         setinput(e.target.value)
@@ -214,6 +90,12 @@ const Chatroom = () => {
         );
     }
     function Bot({ response }) {
+        let truestate = false;
+        if (response.props) {
+            if (response.props.className.trim() === "relative flex items-center justify-center") {
+                truestate = true;
+            }
+        }
         return (
             <div className=' text-black  w-fit px-4   rounded-xl flex items-center gap-3 max-w-[87%] relative pt-1 pb-2'>
                 <div className='mx-4'>
@@ -251,17 +133,19 @@ const Chatroom = () => {
                         </svg>
                     </div>
                     <span className='text-xs pt-2'>Talk X</span>
-                    <div className='py-1 text-base leading-7'>
+                    <div className='py-1 text-sm leading-7'>
                         {
-                            response
+                            truestate ? response : <Markdown remarkPlugins={[remarkGfm]}>{String(response)}</Markdown>
                         }
                     </div>
                 </div>
             </div>
         );
     }
+
     const handleclick = async () => {
         if (input) {
+            document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight
             setinput("");
             setresponses({
                 user: [...responses.user, input], bot: [
@@ -289,19 +173,21 @@ const Chatroom = () => {
             const result = await chatSession.sendMessage(input);
             const response = result.response.text();
             console.log(response);
-            const html = convertToJSX(response);
-            setresponses((prevResponses) => ({
-                ...prevResponses,
-                bot: [...prevResponses.bot.slice(0, -1), html]
-            }));
+            if (response) {
 
+                setresponses((prevResponses) => ({
+                    ...prevResponses,
+                    bot: [...prevResponses.bot.slice(0, -1), response]
+                }));
+            }
         }
 
 
     }
     useEffect(() => {
-
+        document.querySelector(".chats") ? document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight : ""
         console.log(responses);
+        localStorage.setItem("TalkX", JSON.stringify(responses))
         return () => {
 
         }

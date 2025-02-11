@@ -3,14 +3,36 @@
 @tailwind utilities;
 
 ::selection {
-    color: white;
-    background-color: rgb(119, 119, 119);
+  color: white;
+  background-color: rgb(119, 119, 119);
 }
+
 @keyframes shine {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
+  0% {
+    background-position: 200% 0;
   }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+pre {
+  background-color: #1F2937;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  overflow-x: auto;
+}
+
+li >code {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  border-radius: 0.25rem;
+  color: #DC2626;
+  background-color: #E5E7EB;
+  border-radius: 30px;
+  margin: 0 3px;
+}
