@@ -1,11 +1,12 @@
 "use client"
-import { UserButton, SignedIn } from '@clerk/nextjs'
+import { UserButton,SignedIn ,useUser } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 const Chatroom = () => {
+    const { isSignedIn, user, isLoaded } = useUser()
     const [personaldata, setpersonaldata] = useState("")
     const [responses, setresponses] = useState({
         user: [],
@@ -13,17 +14,15 @@ const Chatroom = () => {
     })
     const [input, setinput] = useState("")
     useEffect(() => {
-        (async function name() {
-            let a = await fetch("/api/data")
-            let r = await a.json();
-            r ? setpersonaldata(r) : ""
-            console.log(r);
-        })()
+        if (isSignedIn) {
+        console.log(user);
+        setpersonaldata(user)
+        }
 
         return () => {
 
         }
-    }, [])
+    }, [user])
 
     const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_KEY);
     const model = genAI.getGenerativeModel({
@@ -81,7 +80,7 @@ const Chatroom = () => {
                 </div>
 
                 <div>
-                    <span className='text-xs'>{personaldata.username}</span>
+                    <span className='text-xs'>{personaldata.fullName}</span>
                     <div className='py-1'>
                         {name}
                     </div>
@@ -202,7 +201,7 @@ const Chatroom = () => {
                             <img src="/logo.webp" className='w-20 h-20 rounded-full' alt="Bot Logo" />
                             <span className='text-lg'>
 
-                                {personaldata.username}
+                                {personaldata.fullName}
                             </span>
                         </div>
                         <div className='bg-black w-9 h-9 text-center justify-self-center align-bottom rounded-full py-1'>
@@ -211,7 +210,7 @@ const Chatroom = () => {
                     </div>
                     <div className='text-center -mt-16  flex flex-col gap-3 items-center'>
                         <img src="/logo.webp" className='h-24 rounded-full' alt="Bot Logo" />
-                        <h1 className='font-extrabold text-4xl text-gray-500'>Hi {personaldata.username} </h1>
+                        <h1 className='font-extrabold text-4xl text-gray-500'>Hi {personaldata.fullName} </h1>
                         <h2 className='text-2xl font-bold'>Can I help you anything?</h2>
                         <p className='w-1/2 text-base '>Ready to assist you with anything you need,from answering questions to providing personalized recommendations. Lets get started!</p>
                     </div>
