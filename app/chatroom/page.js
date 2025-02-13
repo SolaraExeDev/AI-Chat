@@ -1,5 +1,5 @@
 "use client"
-import { UserButton,SignedIn ,useUser } from '@clerk/nextjs'
+import { UserButton, SignedIn, useUser } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +15,7 @@ const Chatroom = () => {
     const [input, setinput] = useState("")
     useEffect(() => {
         if (isSignedIn) {
-        setpersonaldata(user)
+            setpersonaldata(user)
         }
 
         return () => {
@@ -37,8 +37,6 @@ const Chatroom = () => {
         responseMimeType: "text/plain",
     };
     useEffect(() => {
-
-
         let a = JSON.parse(localStorage.getItem("TalkX"))
         if (a) {
             setresponses(a)
@@ -50,6 +48,11 @@ const Chatroom = () => {
 
     const handleinputchange = (e) => {
         setinput(e.target.value)
+    }
+    const handlekeydown = (e) => {
+        if (e.key === "Enter") {
+            document.querySelector(".button-enter").click()
+        }
     }
     function User({ name }) {
         return (
@@ -190,7 +193,12 @@ const Chatroom = () => {
 
         }
     }, [responses])
-
+    const deletechat = () => {
+        setresponses({
+            user: [],
+            bot: []
+        })
+    }
     return (
         <div className='w-full h-[100vh] bg-gradient-to-r from-white to-pink-200'>
             <SignedIn>
@@ -207,11 +215,11 @@ const Chatroom = () => {
                             <UserButton />
                         </div>
                     </div>
-                    <div className='text-center -mt-16  flex flex-col gap-3 items-center'>
-                        <img src="/logo.webp" className='h-24 rounded-full' alt="Bot Logo" />
+                    <div className='text-center -mt-10 sm:-mt-16  flex flex-col gap-1 sm:gap-3 items-center'>
+                        <img src="/logo.webp" className='h-20 sm:h-24 rounded-full' alt="Bot Logo" />
                         <h1 className='font-extrabold text-4xl text-gray-500'>Hi {personaldata.fullName} </h1>
                         <h2 className='text-2xl font-bold'>Can I help you anything?</h2>
-                        <p className='w-1/2 text-base '>Ready to assist you with anything you need,from answering questions to providing personalized recommendations. Lets get started!</p>
+                        <p className='w-5/6 sm:w-1/2 text-base '>Ready to assist you with anything you need,from answering questions to providing personalized recommendations. Lets get started!</p>
                     </div>
                     <div className='w-5/6 chats mx-auto mt-10 flex flex-col gap-3 h-[36vh] overflow-y-auto py-3 '>
                         {responses.user.map((e, index) => (
@@ -225,7 +233,59 @@ const Chatroom = () => {
                     </div>
 
                 </div>
-                <div className="fixed bottom-2 left-[5%]  overflow-hidden bg-white shadow-xl w-[90%] mx-auto rounded-xl border">
+                <div className="fixed bottom-2 left-[8%] sm:left-[8%]   bg-white shadow-xl w-[90%] mx-auto rounded-xl border">
+                    <button
+                        onClick={deletechat}
+                        title='clear all chat'
+                        className="group absolute -left-[8%] md:-left-[5%] flex w-12 h-12 bottom-0 md:h-14 md:w-14 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-400 hover:bg-red-600"
+                    >
+                        <svg
+                            viewBox="0 0 1.625 1.625"
+                            className="absolute -top-7 fill-white delay-100 group-hover:top-6 group-hover:animate-[spin_1.4s] group-hover:duration-1000"
+                            height="15"
+                            width="15"
+                        >
+                            <path
+                                d="M.471 1.024v-.52a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099h-.39c-.107 0-.195 0-.195-.195"
+                            ></path>
+                            <path
+                                d="M1.219.601h-.163A.1.1 0 0 1 .959.504V.341A.033.033 0 0 0 .926.309h-.26a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099v-.39a.033.033 0 0 0-.032-.033"
+                            ></path>
+                            <path
+                                d="m1.245.465-.15-.15a.02.02 0 0 0-.016-.006.023.023 0 0 0-.023.022v.108c0 .036.029.065.065.065h.107a.023.023 0 0 0 .023-.023.02.02 0 0 0-.007-.016"
+                            ></path>
+                        </svg>
+                        <svg
+                            width="16"
+                            fill="none"
+                            viewBox="0 0 39 7"
+                            className="origin-right duration-500 group-hover:rotate-90"
+                        >
+                            <line strokeWidth="4" stroke="white" y2="5" x2="39" y1="5"></line>
+                            <line
+                                strokeWidth="3"
+                                stroke="white"
+                                y2="1.5"
+                                x2="26.0357"
+                                y1="1.5"
+                                x1="12"
+                            ></line>
+                        </svg>
+                        <svg width="16" fill="none" viewBox="0 0 33 39" className="">
+                            <mask fill="white" id="path-1-inside-1_8_19">
+                                <path
+                                    d="M0 0H33V35C33 37.2091 31.2091 39 29 39H4C1.79086 39 0 37.2091 0 35V0Z"
+                                ></path>
+                            </mask>
+                            <path
+                                mask="url(#path-1-inside-1_8_19)"
+                                fill="white"
+                                d="M0 0H33H0ZM37 35C37 39.4183 33.4183 43 29 43H4C-0.418278 43 -4 39.4183 -4 35H4H29H37ZM4 43C-0.418278 43 -4 39.4183 -4 35V0H4V35V43ZM37 0V35C37 39.4183 33.4183 43 29 43V35V0H37Z"
+                            ></path>
+                            <path strokeWidth="4" stroke="white" d="M12 6L12 29"></path>
+                            <path strokeWidth="4" stroke="white" d="M21 6V29"></path>
+                        </svg>
+                    </button>
                     <input
                         className="input bg-transparent outline-none border-none pl-6 pr-6 py-4 w-full "
                         placeholder="Ask me anything"
@@ -233,9 +293,11 @@ const Chatroom = () => {
                         type="text"
                         autoFocus={true}
                         value={input}
+                        onKeyDown={handlekeydown}
+
                         onChange={handleinputchange}
                     />
-                    <div onClick={handleclick} className="absolute right-2 top-[0.4em]">
+                    <div onClick={handleclick} className="button-enter absolute right-2 top-[0.4em]">
                         <button
                             className="w-11 h-11 rounded-full bg-violet-500 group shadow-xl flex items-center justify-center relative overflow-hidden"
                         >

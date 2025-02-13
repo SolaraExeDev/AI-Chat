@@ -6,6 +6,30 @@
   color: white;
   background-color: rgb(119, 119, 119);
 }
+/* Style the scrollbar container */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust width for vertical scrollbar */
+  height: 12px; /* Adjust height for horizontal scrollbar */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light grey background for the track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+/* Style the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Darker grey for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 3px solid #f1f1f1; /* Optional: border for a 3D effect */
+}
+
+/* Hover effect for the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker thumb when hovered */
+}
+
 
 @keyframes shine {
   0% {
@@ -22,7 +46,7 @@ pre {
   color: white;
   padding: 20px;
   border-radius: 20px;
-  overflow-x: auto;
+  overflow-x: scroll;
 }
 
 li >code {

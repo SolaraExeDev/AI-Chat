@@ -4,12 +4,9 @@ const Navbar = () => {
     return (
         <div className='flex w-[85%] mx-auto items-center justify-between py-4 '>
             <h2 className='text-blue-700 font-bold text-3xl'>Talk X</h2>
-            <div className='font-medium text-lg'>
-                Contact Us
-            </div>
+            
             <div className='flex items-center justify-center gap-3'>
                 <SignUpButton >
-
                     <button className='bg-blue-700 text-white py-2 px-3   rounded-2xl flex items-center gap-2'>
                         Get Started
                         <svg
