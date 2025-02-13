@@ -14,3 +14,7 @@
   for = "/_next/image*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
