@@ -18,6 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider
+    signInFallbackRedirectUrl="/chatroom"
       appearance={{
         baseTheme: dark,
       }}
