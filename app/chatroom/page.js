@@ -13,11 +13,11 @@ const Chatroom = () => {
     })
     const [input, setinput] = useState("")
     useEffect(() => {
-
         (async function name() {
             let a = await fetch("/api/data")
             let r = await a.json();
             r ? setpersonaldata(r) : ""
+            console.log(r);
         })()
 
         return () => {
