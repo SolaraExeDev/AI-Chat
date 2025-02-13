@@ -15,7 +15,6 @@ const Chatroom = () => {
     const [input, setinput] = useState("")
     useEffect(() => {
         if (isSignedIn) {
-        console.log(user);
         setpersonaldata(user)
         }
 
