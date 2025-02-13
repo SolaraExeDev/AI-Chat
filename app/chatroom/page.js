@@ -15,7 +15,7 @@ const Chatroom = () => {
     useEffect(() => {
 
         (async function name() {
-            let a = await fetch("/api")
+            let a = await fetch("/api/data")
             let r = await a.json();
             r ? setpersonaldata(r) : ""
         })()
