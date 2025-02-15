@@ -1,10 +1,11 @@
 "use client"
-import { UserButton, SignedIn, useUser } from '@clerk/nextjs'
+import { UserButton, useUser } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Link from 'next/link';
 const Chatroom = () => {
     const { isSignedIn, user, isLoaded } = useUser()
     const [personaldata, setpersonaldata] = useState("")
@@ -18,6 +19,7 @@ const Chatroom = () => {
     })
     const [input, setinput] = useState("")
     useEffect(() => {
+
         if (isSignedIn) {
             setpersonaldata(user)
         }
@@ -198,9 +200,9 @@ const Chatroom = () => {
                 display: "none",
                 height: "66vh"
             })
-            
+
         }
-        else{
+        else {
             setnonedisplay({
                 display: "",
                 height: "36vh"
@@ -219,7 +221,8 @@ const Chatroom = () => {
     }
     return (
         <div className='w-full h-[100vh] bg-gradient-to-r from-white to-pink-200'>
-            <SignedIn>
+            {
+                isSignedIn &&
                 <div className='w-full h-full'>
                     <div className='flex items-center justify-between w-[90%] mx-auto '>
                         <div className='font-bold flex items-center justify-center'>
@@ -251,6 +254,9 @@ const Chatroom = () => {
                     </div>
 
                 </div>
+            }
+            {
+                isSignedIn &&
                 <div className="fixed bottom-2 left-[8%] sm:left-[8%]   bg-white shadow-xl w-[90%] mx-auto rounded-xl border">
                     <button
                         onClick={deletechat}
@@ -356,8 +362,15 @@ const Chatroom = () => {
                         </button>
                     </div>
                 </div>
+                || <div className='h-full w-full flex items-center justify-center text-xl gap-2 font-bold'>
+                    Login Required !!
+                    <div className='flex items-center justify-center gap-2'>
+                        Go Back to
+                        <Link className='text-red-700 underline' href="/">Home</Link>
+                    </div>
+                </div>
+            }
 
-            </SignedIn>
 
         </div>
 
