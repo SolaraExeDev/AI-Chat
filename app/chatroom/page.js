@@ -8,6 +8,10 @@ import remarkGfm from 'remark-gfm'
 const Chatroom = () => {
     const { isSignedIn, user, isLoaded } = useUser()
     const [personaldata, setpersonaldata] = useState("")
+    const [nonedisplay, setnonedisplay] = useState({
+        display: "",
+        height: "36vh"
+    })
     const [responses, setresponses] = useState({
         user: [],
         bot: []
@@ -189,6 +193,20 @@ const Chatroom = () => {
         document.querySelector(".chats") ? document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight : ""
         console.log(responses);
         localStorage.setItem("TalkX", JSON.stringify(responses))
+        if (responses.user.length > 0) {
+            setnonedisplay({
+                display: "none",
+                height: "66vh"
+            })
+            
+        }
+        else{
+            setnonedisplay({
+                display: "",
+                height: "36vh"
+            })
+
+        }
         return () => {
 
         }
@@ -215,13 +233,13 @@ const Chatroom = () => {
                             <UserButton />
                         </div>
                     </div>
-                    <div className='text-center -mt-10 sm:-mt-16  flex flex-col gap-1 sm:gap-3 items-center'>
+                    <div style={{ display: nonedisplay.display }} className='text-center -mt-10 sm:-mt-16  flex flex-col gap-1 sm:gap-3 items-center'>
                         <img src="/logo.webp" className='h-20 sm:h-24 rounded-full' alt="Bot Logo" />
                         <h1 className='font-extrabold text-4xl text-gray-500'>Hi {personaldata.fullName} </h1>
                         <h2 className='text-2xl font-bold'>Can I help you anything?</h2>
                         <p className='w-5/6 sm:w-1/2 text-base '>Ready to assist you with anything you need,from answering questions to providing personalized recommendations. Lets get started!</p>
                     </div>
-                    <div className='w-5/6 chats mx-auto mt-10 flex flex-col gap-3 h-[36vh] overflow-y-auto py-3 '>
+                    <div style={{ height: nonedisplay.height }} className='w-5/6 chats mx-auto mt-10 flex flex-col gap-3  overflow-y-auto py-3 '>
                         {responses.user.map((e, index) => (
                             <React.Fragment key={uuidv4()}>
                                 <User name={e} />
