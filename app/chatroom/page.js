@@ -34,16 +34,6 @@ const Chatroom = () => {
         model: "gemini-2.0-flash",
     });
 
-    useEffect(() => {
-        if (oldsession.session) {
-            console.log(oldsession.session);
-            console.log(clerk);
-            localStorage.setItem("sessiondata", JSON.stringify(oldsession.session))
-        }
-        return () => {
-
-        }
-    }, [oldsession])
 
     const generationConfig = {
         temperature: 0,
@@ -57,15 +47,7 @@ const Chatroom = () => {
         if (a) {
             setresponses(a)
         }
-        let b = JSON.parse(localStorage.getItem("sessiondata"))
-        if (b !== oldsession.session && b) {
-            clerk.setActive({
-                session: b,
-                organization: null,
-                beforeEmit: () => console.log('Before session is emitted'),
-                redirectUrl: "/chatroom"
-            })
-        }
+        
         return () => {
 
         }
