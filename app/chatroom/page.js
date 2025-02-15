@@ -1,5 +1,5 @@
 "use client"
-import { UserButton, useUser, SignedIn, useSession, useClerk } from '@clerk/nextjs'
+import { UserButton, useUser, SignedIn, useSession, useClerk,useAuth } from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
@@ -17,12 +17,12 @@ const Chatroom = () => {
         bot: []
     })
     const [input, setinput] = useState("")
-    const oldsession = useSession();
-    const clerk = useClerk();
+    const auth=useAuth();
     useEffect(() => {
         if (isSignedIn) {
             setpersonaldata(user)
         }
+        console.log(auth);
 
         return () => {
 
@@ -47,7 +47,6 @@ const Chatroom = () => {
         if (a) {
             setresponses(a)
         }
-        
         return () => {
 
         }
@@ -180,7 +179,6 @@ const Chatroom = () => {
 
             const result = await chatSession.sendMessage(input);
             const response = result.response.text();
-            console.log(response);
             if (response) {
 
                 setresponses((prevResponses) => ({
@@ -194,7 +192,6 @@ const Chatroom = () => {
     }
     useEffect(() => {
         document.querySelector(".chats") ? document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight : ""
-        console.log(responses);
         localStorage.setItem("TalkX", JSON.stringify(responses))
         if (responses.user.length > 0) {
             setnonedisplay({
