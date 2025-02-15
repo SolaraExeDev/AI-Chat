@@ -2,6 +2,12 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import {
   ClerkProvider,
+  SignedOut,
+  SignedIn,
+  SignInButton,
+  SignUpButton,
+  UserButton
+  
 } from '@clerk/nextjs'
 import { dark } from "@clerk/themes";
 
@@ -18,6 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider
+    dynamic={true}
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
       appearance={{
         baseTheme: dark,
@@ -28,7 +35,6 @@ export default function RootLayout({ children }) {
         <body
           className={`${poppins.className}  antialiased`}
         >
-
           {children}
         </body>
       </html>

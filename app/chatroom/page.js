@@ -1,5 +1,5 @@
 "use client"
-import { UserButton, useUser, SignedIn, useSession, useClerk,useAuth } from '@clerk/nextjs'
+import { UserButton, useUser, SignedIn} from '@clerk/nextjs'
 import React, { useState, useEffect } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
@@ -17,13 +17,10 @@ const Chatroom = () => {
         bot: []
     })
     const [input, setinput] = useState("")
-    const auth=useAuth();
     useEffect(() => {
         if (isSignedIn) {
             setpersonaldata(user)
         }
-        console.log(auth);
-
         return () => {
 
         }
