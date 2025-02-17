@@ -164,8 +164,8 @@ const page = () => {
                 transition={Bounce}
                 className="font-mono"
             />
-            <div className='relative h-full w-full overflow-hidden items-center flex md:flex-row flex-col md:justify-between'>
-                <div id='signup' className='relative z-0 flex flex-col items-center w-10/12 md:w-1/2 gap-3 md:gap-5 '>
+            <div className='relative h-[200vh] md:h-full w-full overflow-hidden top-[15%] md:top-0 items-center flex md:flex-row gap-48 md:gap-0 flex-col md:justify-between'>
+                <div id='signup' className='relative z-0 flex flex-col items-center w-full md:w-1/2 gap-3 md:gap-5 '>
                     <div className=' font-bold '>
                         <img src="/logo.webp" className='w-16 h-16 rounded-full' alt="Bot Logo" />
 
@@ -352,7 +352,7 @@ const page = () => {
                 <div className='rotating-div absolute top-0 hidden md:block z-10 left-[calc(100%-40%)] transition-all duration-1000 w-[40%] h-full bg-gradient-to-r from-[#642481] via-[#642481] to-[#f10ade]'>
 
                 </div>
-                <div id='login' className='relative z-0 flex flex-col items-center mt-10 md:mt-0  w-10/12 md:w-1/2 gap-6 md:gap-8'>
+                <div id='login' className='relative z-0 flex flex-col items-center mt-10 md:mt-0  w-full md:w-1/2 gap-6 md:gap-8'>
                     <div className=' font-bold '>
                         <img src="/logo.webp" className='w-16 h-16 rounded-full' alt="Bot Logo" />
 
