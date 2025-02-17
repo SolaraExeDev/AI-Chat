@@ -2,8 +2,9 @@
 import React, { useState, useRef } from 'react'
 import { Client, Account, OAuthProvider, ID } from 'appwrite';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { redirect } from 'next/navigation';
+import { redirect,useRouter } from 'next/navigation';
 const page = () => {
+    const router=useRouter()
     const client = new Client();
     const [inputs, setinputs] = useState({
         email: "",
@@ -18,7 +19,7 @@ const page = () => {
 
     const account = new Account(client);
     const ref = useRef()
-    const ref1= useRef()
+    const ref1 = useRef()
     const handleinputschange = (e) => {
         setinputs({ ...inputs, [e.target.name]: e.target.value })
         console.log(inputs);
@@ -89,6 +90,7 @@ const page = () => {
         redirect("/chatroom")
     }
     const rotate = () => {
+        window.scrollTo(0, 1111)
         document.querySelector(".rotating-div").classList.add("rotate")
     }
     const handlelogininputs = (e) => {
@@ -98,7 +100,14 @@ const page = () => {
         })
     }
     const handlelogin = async () => {
-        account.createEmailPasswordSession(logininputs.email, logininputs.password)
+        await account.createEmailPasswordSession(logininputs.email, logininputs.password)
+        .then(()=>{
+            setlogininputs({
+                email: "",
+                password: ""
+            })
+            router.push("/chatroom")
+        })
             .catch(e => {
                 console.log(e);
                 toast('🚀 Invalid Email / Password', {
@@ -114,11 +123,7 @@ const page = () => {
                 });
                 return;
             })
-            setlogininputs({
-                email: "",
-                password: ""
-            })
-            redirect("/chatroom")
+        
 
 
     }
@@ -146,7 +151,7 @@ const page = () => {
         }
     }
     return (
-        <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
+        <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] overflow-hidden">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -159,8 +164,8 @@ const page = () => {
                 transition={Bounce}
                 className="font-mono"
             />
-            <div className='relative h-full w-full overflow-hidden flex justify-between'>
-                <div className='relative z-0 flex flex-col items-center  w-1/2 gap-5'>
+            <div className='relative h-full w-full overflow-hidden items-center flex md:flex-row flex-col md:justify-between'>
+                <div id='signup' className='relative z-0 flex flex-col items-center w-10/12 md:w-1/2 gap-3 md:gap-5 '>
                     <div className=' font-bold '>
                         <img src="/logo.webp" className='w-16 h-16 rounded-full' alt="Bot Logo" />
 
@@ -342,12 +347,12 @@ const page = () => {
 
 
                     </div>
-                    <div>Already have an account ? <span onClick={rotate} className='font-bold text-[#f10ade] cursor-pointer'>Sign in</span> here</div>
+                    <div>Already have an account ? <a href='#login' onClick={rotate} className='font-bold text-[#f10ade] cursor-pointer'>Sign in</a> here</div>
                 </div>
-                <div className='rotating-div absolute top-0 z-10 left-[calc(100%-40%)] transition-all duration-1000 w-[40%] h-full bg-gradient-to-r from-[#642481] via-[#642481] to-[#f10ade]'>
+                <div className='rotating-div absolute top-0 hidden md:block z-10 left-[calc(100%-40%)] transition-all duration-1000 w-[40%] h-full bg-gradient-to-r from-[#642481] via-[#642481] to-[#f10ade]'>
 
                 </div>
-                <div className='relative z-0 flex flex-col items-center  w-1/2 gap-8'>
+                <div id='login' className='relative z-0 flex flex-col items-center mt-10 md:mt-0  w-10/12 md:w-1/2 gap-6 md:gap-8'>
                     <div className=' font-bold '>
                         <img src="/logo.webp" className='w-16 h-16 rounded-full' alt="Bot Logo" />
 
@@ -503,7 +508,7 @@ const page = () => {
 
 
                     </div>
-                    <div>No account ? <span onClick={derotate} className='font-bold text-[#f10ade] cursor-pointer'>Sign Up</span> here</div>
+                    <div>No account ? <a href='#signup' onClick={derotate} className='font-bold text-[#f10ade] cursor-pointer'>Sign Up</a> here</div>
                 </div>
             </div>
         </div>
