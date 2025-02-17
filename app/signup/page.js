@@ -27,8 +27,8 @@ const page = () => {
     const handleGoogleLogin = async () => {
         await account.createOAuth2Token(
             OAuthProvider.Google,
-            "http://localhost:3000/verify",
-            "http://localhost:3000/"
+            "https://talkx.netlify.app/verify",
+            "https://talkx.netlify.app/"
         )
     }
     const handlecreatelogin = async () => {

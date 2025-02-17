@@ -8,7 +8,7 @@ const Verify = () => {
         .setEndpoint('https://cloud.appwrite.io/v1')
         .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
     const account = new Account(client);
-    
+
     const SearchParamsWithSuspense = () => {
         const searchParams = useSearchParams();
         return (
@@ -26,7 +26,7 @@ const Verify = () => {
 const VerifyContent = ({ account, searchParams }) => {
     useEffect(() => {
         (async function () {
-            if (localStorage.getItem("cookieFallback") !== null || localStorage.getItem("cookieFallback") !== '[]') {
+            if (localStorage.getItem("cookieFallback") !== null && localStorage.getItem("cookieFallback") !== '[]') {
                 await account.deleteSessions();
             }
             const userid = searchParams.get("userId");
