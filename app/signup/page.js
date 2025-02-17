@@ -14,7 +14,7 @@ const page = () => {
         email: "",
         password: ""
     })
-    client.setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
+    client.setProject(process.env.NEXT_PUBLIC_PROJECT_ID).setEndpoint('https://cloud.appwrite.io/v1');
 
     const account = new Account(client);
     const ref = useRef()
