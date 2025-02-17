@@ -1,8 +1,3 @@
-
-
-Here is the generated README with emojis:
-
-
 # 🚀 TalkX: Conversational AI Assistant for Local Knowledge 🤖
 
 TalkX is an advanced AI chatbot designed to revolutionize customer interactions 📱. With cutting-edge machine learning technology, TalkX delivers intelligent, human-like conversations that engage and support users around the clock 🕰️.
