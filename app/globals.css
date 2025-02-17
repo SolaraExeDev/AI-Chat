@@ -60,3 +60,40 @@ li >code {
   border-radius: 30px;
   margin: 0 3px;
 }
+@keyframes move-up6 {
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes move-down1 {
+  to {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes move-updown1 {
+  to {
+    transform: translateY(10px);
+  }
+  from {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-move-up6 {
+  animation: move-up6 0.4s ease-in infinite alternate-reverse;
+}
+
+.animate-move-down1 {
+  animation: move-down1 0.4s ease-in infinite alternate-reverse;
+}
+
+.animate-move-updown1 {
+  animation: move-updown1 0.4s ease-in infinite alternate-reverse;
+}
+.rotate{
+  left: 0%;
+  width: 50%;
+  transform: rotate(180deg);
+}

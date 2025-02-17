@@ -13,10 +13,13 @@
     "@clerk/themes": "^2.2.16",
     "@google/generative-ai": "^0.21.0",
     "@netlify/plugin-nextjs": "^5.9.4",
+    "appwrite": "^17.0.0",
     "next": "15.1.6",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.3",
+    "react-toastify": "^11.0.3",
     "remark-gfm": "^4.0.1",
     "uuid": "^11.0.5"
   },
