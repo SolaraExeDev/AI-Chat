@@ -4,3 +4,9 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+[[redirects]]
+  from = '/_next/image/*'
+  query = { q = ':quality', url = ':url', w = ':width' }
+  to = '/.netlify/images?url=:url&w=:width&q=:quality'
+  status = 200
+  force = true

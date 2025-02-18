@@ -27,7 +27,7 @@ const VerifyContent = ({ account, searchParams }) => {
     useEffect(() => {
         (async function () {
             if (localStorage.getItem("cookieFallback") !== null && localStorage.getItem("cookieFallback") !== '[]') {
-                await account.deleteSessions();
+                localStorage.removeItem("cookieFallback");
             }
             const userid = searchParams.get("userId");
             const secret = searchParams.get("secret");
