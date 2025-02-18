@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm'
 import { redirect } from 'next/navigation';
 const Chatroom = () => {
     const client = new Client()
-        .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
+        .setEndpoint('https://cloud.appwrite.io/v1') 
         .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
     const account = new Account(client);
     const [personaldata, setpersonaldata] = useState("")
@@ -279,11 +279,11 @@ const Chatroom = () => {
             </div>
 
         </div>
-        <div className="fixed bottom-2 left-[8%] sm:left-[8%]   bg-white shadow-xl w-[90%] mx-auto rounded-xl border">
+        <div className="fixed bottom-2 left-[14%] sm:left-[8%]   bg-white shadow-xl sm:w-[90%] w-10/12 mx-auto rounded-xl border">
             <button
                 onClick={deletechat}
                 title='clear all chat'
-                className="group absolute -left-[8%] md:-left-[5%] flex w-12 h-12 bottom-0 md:h-14 md:w-14 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-400 hover:bg-red-600"
+                className="group absolute -left-[12%] sm:-left-[8%] flex w-12 h-12 bottom-0 md:h-14 md:w-14 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-400 hover:bg-red-600"
             >
                 <svg
                     viewBox="0 0 1.625 1.625"
@@ -333,7 +333,7 @@ const Chatroom = () => {
                 </svg>
             </button>
             <input
-                className="input bg-transparent outline-none border-none pl-6 pr-6 py-4 w-full "
+                className="input bg-transparent outline-none border-none pl-6 pr-6 py-4 w-11/12 "
                 placeholder="Ask me anything"
                 name="text"
                 type="text"

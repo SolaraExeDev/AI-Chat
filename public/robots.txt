@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://talkx.netlify.app/
+
+# Sitemaps
+Sitemap: https://talkx.netlify.app/sitemap.xml

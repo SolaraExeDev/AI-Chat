@@ -1,10 +1,10 @@
 "use client"
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Client, Account, OAuthProvider, ID } from 'appwrite';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { redirect,useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 const page = () => {
-    const router=useRouter()
+    const router = useRouter()
     const client = new Client();
     const [inputs, setinputs] = useState({
         email: "",
@@ -101,13 +101,13 @@ const page = () => {
     }
     const handlelogin = async () => {
         await account.createEmailPasswordSession(logininputs.email, logininputs.password)
-        .then(()=>{
-            setlogininputs({
-                email: "",
-                password: ""
+            .then(() => {
+                setlogininputs({
+                    email: "",
+                    password: ""
+                })
+                router.push("/chatroom")
             })
-            router.push("/chatroom")
-        })
             .catch(e => {
                 console.log(e);
                 toast('🚀 Invalid Email / Password', {
@@ -123,7 +123,7 @@ const page = () => {
                 });
                 return;
             })
-        
+
 
 
     }
@@ -150,6 +150,18 @@ const page = () => {
 
         }
     }
+    useEffect(() => {
+        (async function name() {
+
+            if (localStorage.getItem("cookieFallback") !== null && localStorage.getItem("cookieFallback") !== '[]') {
+                await account.deleteSessions();
+            }
+        })()
+        return () => {
+
+        }
+    },)
+
     return (
         <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] overflow-hidden">
             <ToastContainer
