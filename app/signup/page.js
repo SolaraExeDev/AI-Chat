@@ -22,7 +22,6 @@ const page = () => {
     const ref1 = useRef()
     const handleinputschange = (e) => {
         setinputs({ ...inputs, [e.target.name]: e.target.value })
-        console.log(inputs);
     }
     const handleGoogleLogin = async () => {
         await account.createOAuth2Token(
@@ -67,7 +66,6 @@ const page = () => {
             inputs.password.trim(),
             inputs.name.trim()
         ).catch(e => {
-            console.log(e);
             toast('🚀 User with this credential already exist', {
                 position: "top-right",
                 autoClose: 4000,
@@ -109,7 +107,6 @@ const page = () => {
                 router.push("/chatroom")
             })
             .catch(e => {
-                console.log(e);
                 toast('🚀 Invalid Email / Password', {
                     position: "top-right",
                     autoClose: 4000,
