@@ -1,13 +1,13 @@
 import { useRouter } from 'next/navigation'
 import React from 'react'
 const Navbar = () => {
-    const router=useRouter();
+    const router = useRouter();
     return (
         <div className='flex w-[85%] mx-auto items-center justify-between py-4 '>
             <h2 className='text-blue-700 font-bold text-3xl'>Talk X</h2>
 
             <div className='flex items-center justify-center gap-3'>
-                <button onClick={()=>router.push("/signup")} className='bg-blue-700 text-white py-2 px-3   rounded-2xl flex items-center gap-2'>
+                <button onClick={() => router.push("/signup")} className='bg-blue-700 text-white py-2 px-3   rounded-2xl flex items-center gap-2'>
                     Get Started
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

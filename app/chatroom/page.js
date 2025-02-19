@@ -12,9 +12,6 @@ const Chatroom = () => {
         .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
     const account = new Account(client);
     const [personaldata, setpersonaldata] = useState("")
-    const [responseText, setResponseText] = useState(""); // Store the full response
-    const [currentIndex, setCurrentIndex] = useState(0);
-
     const [nonedisplay, setnonedisplay] = useState({
         display: "",
         height: "36vh"
@@ -187,7 +184,7 @@ const Chatroom = () => {
             });
 
             const result = await chatSession.sendMessage(input);
-            const response = await result.response.text();
+            const response = result.response.text();
             if (response) {
                 let currentIndex = 0;
 
@@ -211,8 +208,8 @@ const Chatroom = () => {
                         return prevResponses;
                     });
 
-                    currentIndex++; 
-                }, 5); 
+                    currentIndex++;
+                }, 5);
             }
 
         }
