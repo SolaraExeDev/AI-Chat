@@ -5,26 +5,33 @@ const Navbar = () => {
     return (
         <div className='flex w-[85%] mx-auto items-center justify-between py-4 '>
             <h2 className='text-blue-700 font-bold text-3xl'>Talk X</h2>
-
             <div className='flex items-center justify-center gap-3'>
-                <button onClick={() => router.push("/signup")} className='bg-blue-700 text-white py-2 px-3   rounded-2xl flex items-center gap-2'>
-                    Get Started
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width={26}
-                        height={26}
-                        fill="none"
-                        className="injected-svg"
-                        color="#fff"
-                        data-src="https://cdn.hugeicons.com/icons/arrow-right-02-solid-standard.svg"
-                        viewBox="0 0 24 24"
+                <button onClick={() => { router.push("/signup") }}
+                    className="relative flex items-center px-6 py-3 overflow-hidden font-medium transition-all bg-blue-700 rounded-md group"
+                >
+                    <span
+                        className="absolute top-0 right-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-indigo-700 rounded group-hover:-mr-4 group-hover:-mt-4"
                     >
-                        <path
-                            fill="#fff"
-                            d="M15.707 6.293a1 1 0 1 0-1.414 1.414L17.586 11H4a1 1 0 1 0 0 2h13.586l-3.293 3.293a1 1 0 0 0 1.414 1.414l4.995-4.995.053-.056a1 1 0 0 0 .245-.653V11.99a.999.999 0 0 0-.293-.697l-5-5Z"
-                        />
-                    </svg>
+                        <span
+                            className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-white"
+                        ></span>
+                    </span>
+                    <span
+                        className="absolute bottom-0 rotate-180 left-0 inline-block w-4 h-4 transition-all duration-500 ease-in-out bg-indigo-700 rounded group-hover:-ml-4 group-hover:-mb-4"
+                    >
+                        <span
+                            className="absolute top-0 right-0 w-5 h-5 rotate-45 translate-x-1/2 -translate-y-1/2 bg-white"
+                        ></span>
+                    </span>
+                    <span
+                        className="absolute bottom-0 left-0 w-full h-full transition-all duration-500 ease-in-out delay-200 -translate-x-full bg-indigo-600 rounded-md group-hover:translate-x-0"
+                    ></span>
+                    <span
+                        className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-white"
+                    >Get Started</span
+                    >
                 </button>
+
 
             </div>
         </div>
