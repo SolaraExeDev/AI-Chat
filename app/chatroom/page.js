@@ -1,12 +1,13 @@
 "use client"
 import { Client, Account } from 'appwrite';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { v4 as uuidv4 } from 'uuid';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { redirect } from 'next/navigation';
 const Chatroom = () => {
+    const btnref = useRef()
     const client = new Client()
         .setEndpoint('https://cloud.appwrite.io/v1')
         .setProject(process.env.NEXT_PUBLIC_PROJECT_ID);
@@ -158,6 +159,7 @@ const Chatroom = () => {
 
     const handleclick = async () => {
         if (input) {
+            btnref.current.disabled = true
             document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight
             setinput("");
             setresponses({
@@ -205,11 +207,12 @@ const Chatroom = () => {
                         } else {
                             clearInterval(interval);
                         }
+                        btnref.current.disabled = false
                         return prevResponses;
                     });
 
                     currentIndex++;
-                }, 5);
+                }, 0.1);
             }
 
         }
@@ -239,6 +242,7 @@ const Chatroom = () => {
         }
     }, [responses])
     const deletechat = () => {
+        btnref.current.disabled = false
         setresponses({
             user: [],
             bot: []
@@ -365,9 +369,11 @@ const Chatroom = () => {
 
                     onChange={handleinputchange}
                 />
-                <div onClick={handleclick} className="button-enter absolute right-2 top-[0.4em]">
+                <div className=" absolute right-2 top-[0.4em]">
                     <button
-                        className="w-11 h-11 rounded-full bg-violet-500 group shadow-xl flex items-center justify-center relative overflow-hidden"
+                        className="button-enter w-11 h-11 rounded-full bg-violet-500 group shadow-xl flex items-center justify-center relative overflow-hidden disabled:bg-red-800"
+                        ref={btnref}
+                        onClick={handleclick}
                     >
                         <svg
                             className="relative z-10"
