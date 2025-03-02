@@ -49,6 +49,18 @@ const Chatroom = () => {
         maxOutputTokens: 8192,
         responseMimeType: "text/plain",
     };
+    const chatSession = model.startChat({
+        generationConfig,
+        history: [
+            {
+                role: "user",
+                parts: [
+                    { text: "Hello\n" },
+                ],
+            },
+        ],
+    });
+
     useEffect(() => {
         let a = JSON.parse(localStorage.getItem("TalkX"))
         if (a) {
@@ -157,10 +169,10 @@ const Chatroom = () => {
         );
     }
 
+   
     const handleclick = async () => {
         if (input) {
             btnref.current.disabled = true
-            document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight
             setinput("");
             setresponses({
                 user: [...responses.user, input], bot: [
@@ -173,17 +185,7 @@ const Chatroom = () => {
                 ]
 
             })
-            const chatSession = model.startChat({
-                generationConfig,
-                history: [
-                    {
-                        role: "user",
-                        parts: [
-                            { text: "Hello\n" },
-                        ],
-                    },
-                ],
-            });
+            document.querySelector(".chats") ? document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight : ""
 
             const result = await chatSession.sendMessage(input);
             const response = result.response.text();
@@ -192,7 +194,7 @@ const Chatroom = () => {
 
                 setresponses(prevResponses => ({
                     ...prevResponses,
-                    bot: [...prevResponses.bot.slice(0, -1), response[0]]
+                    bot: [...prevResponses.bot.slice(0, -1), response.slice(0,4)]
                 }));
 
                 const interval = setInterval(() => {
@@ -201,7 +203,9 @@ const Chatroom = () => {
                             return {
                                 ...prevResponses,
                                 bot: prevResponses.bot.map((msg, index) =>
-                                    index === prevResponses.bot.length - 1 ? msg + response[currentIndex] : msg
+                                    index === prevResponses.bot.length - 1
+                                        ? msg + response.slice(currentIndex, currentIndex + 4)
+                                        : msg
                                 )
                             };
                         } else {
@@ -211,8 +215,8 @@ const Chatroom = () => {
                         return prevResponses;
                     });
 
-                    currentIndex++;
-                }, 0.1);
+                    currentIndex += 4;
+                }, 1);
             }
 
         }
@@ -220,7 +224,6 @@ const Chatroom = () => {
 
     }
     useEffect(() => {
-        document.querySelector(".chats") ? document.querySelector(".chats").scrollTop = document.querySelector(".chats").scrollHeight : ""
         console.clear()
         localStorage.setItem("TalkX", JSON.stringify(responses))
         if (responses.user.length > 0) {
